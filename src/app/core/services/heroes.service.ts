@@ -1,14 +1,23 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { Hero } from '../models/hero';
+import { throwError } from 'rxjs';
+
+import { Hero } from '../models/hero-interface';
+import { HeroDTO } from '../models/hero';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeroesService {
   private heroesUrl = 'api/heroes';
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
   constructor(private http: HttpClient) {}
 
@@ -44,7 +53,7 @@ export class HeroesService {
    * @returns Observable de Hero
    */
   modifyHero(hero: Hero) {
-    return this.http.put<Hero>(this.heroesUrl, hero);
+    return this.http.put<Hero>(`${this.heroesUrl}/`, hero, this.httpOptions);
   }
 
   /**
@@ -53,7 +62,7 @@ export class HeroesService {
    * @returns Observable de Heroe
    */
   deleteHero(id: number) {
-    return this.http.delete<Hero>(this.heroesUrl);
+    return this.http.delete<Hero>(`${this.heroesUrl}/${id}`);
   }
 
   /**
@@ -62,8 +71,8 @@ export class HeroesService {
    * @param hero
    * @returns
    */
-  addHero(hero: Hero) {
-    return this.http.post<Hero>(this.heroesUrl, hero);
+  addHero(hero: HeroDTO) {
+    return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions);
   }
 
   handleError(res: HttpErrorResponse | any) {

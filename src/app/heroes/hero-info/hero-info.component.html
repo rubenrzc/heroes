@@ -1,0 +1,39 @@
+<div class="new-hero">
+  <div class="new-profile">
+    <mat-card>
+      <mat-card-subtitle>
+        <h3>NUEVO HEROE</h3>
+      </mat-card-subtitle>
+      <mat-divider></mat-divider>
+      <div class="profile-info">
+        <form [formGroup]="heroFormGroup">
+          <div class="profile-name">
+            <mat-label>Nombre</mat-label>
+            <br />
+            <mat-form-field>
+              <input matInput placeholder="Superman" formControlName="name" appMayus/>
+              <mat-error *ngIf="heroFormGroup.get('name')?.hasError('pattern')"
+                >Nombre no valido</mat-error
+              >
+              <mat-error *ngIf="heroFormGroup.get('name')?.hasError('required')"
+                >El nombre es requerido</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="confirm-profile">
+            <button
+              mat-fab
+              color="primary"
+              aria-label="Editar datos del Heroe"
+              (click)="createHero()"
+              type="button"
+              [disabled]="heroFormGroup.invalid"
+            >
+              <mat-icon>check</mat-icon>
+            </button>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+  </div>
+</div>
