@@ -18,3 +18,5 @@ FROM nginx:latest
 COPY --from=build-step /app/dist/heroes /usr/share/nginx/html
 
 EXPOSE 80
+
+## Comando para correr el contenedor docker run -d -it -p 80:80 heroes
